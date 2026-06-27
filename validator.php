@@ -7,10 +7,13 @@ function validerTelephone(string $telephone) : string {
         $erreur = "numero telephone doit etre 9 chiffres";
     } else if($telephone[0] != "7"){
         $erreur = "numero telephone invalide";
+    } else if($telephone[1] != "0" && $telephone[1] != "5" &&
+        $telephone[1] != "6" && $telephone[1] != "7" &&
+        $telephone[1] != "8"){
+        $erreur = "numero telephone invalide";
     }
     return $erreur;
 }
-
 function validerCode(string $code) : string {
     $erreur = "";
     if(strlen($code) != 4){
