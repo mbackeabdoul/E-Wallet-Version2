@@ -8,3 +8,18 @@ function creerWallet(array $newWallet) : string {
     }
     return $erreur;
 }
+
+// faire une depot
+function faireDepot(string $telephone, int $montant) : string {
+    $erreur = telephoneExiste($telephone);
+    if($erreur == "") $erreur = montantValide($montant);
+    if($erreur == ""){
+        mettreAJourSolde($telephone, $montant);
+        $newTransaction = [
+            'montant' => $montant,
+            'indexClient' => $telephone
+        ];
+        enregistrerTransaction($newTransaction);
+    }
+    return $erreur;
+}
