@@ -1,5 +1,4 @@
 <?php
-
 // on affiche le menu
 function afficherMenu() : void {
     echo "\n Menu Distributeur \n";
@@ -27,5 +26,12 @@ function bindMontant () : string{
 }
 
 function saisiTelephone () : string{
-    return readline("Saisir un numero telephone");
+    return readline("Saisir un numero telephone: ");
+}
+
+function afficherTransactions() : void {
+    global $transactions;
+    foreach($transactions as $transaction){
+     afficherMessage("Montant : ". $transaction['montant']." | Telephone : ".$transaction['indexClient']);
+    }
 }

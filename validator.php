@@ -34,7 +34,6 @@ function telephoneExiste (string $telephone) : string{
         return $erreur;
 }
 
-
 function montantValide (string $montant) : string{
     $erreurs = "";
     if($montant <=0){
@@ -42,3 +41,15 @@ function montantValide (string $montant) : string{
     }
     return $erreurs; 
 } 
+function verifieSolde(string $telephone, int $montant):string {
+    global $wallets;
+    $erreur = "";
+    foreach($wallets as $wallet){
+        if($wallet['telephone'] == $telephone){
+        if($wallet['solde']< $montant){
+        $erreur = "Solde nest pas suiffisant";
+       }
+     }
+    }
+    return $erreur;
+}
