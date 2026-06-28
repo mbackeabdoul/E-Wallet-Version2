@@ -20,3 +20,12 @@ function saisirWallet() : array {
     $newWallet['solde'] = (int)readline("Veuillez saisir la solde:");
     return $newWallet;
 }
+
+function bindMontant () : string{
+    return readline("Saisi un montant :");
+
+}
+
+function saisiTelephone () : string{
+    return readline("Saisir un numero telephone");
+}

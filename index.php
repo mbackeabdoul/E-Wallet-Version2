@@ -9,7 +9,7 @@ include "repository.php";
 include "services.php";
 include "controller.php";
 
-// boucle menu
+// boucle de menu
 do {
     afficherMenu();
     $choix = readline("Votre choix: ");
@@ -23,7 +23,19 @@ do {
             afficherMessage($erreur);
         }
     } else if($choix == "2"){
-        afficherMessage("noppeegul");
+          $telephone = saisiTelephone();
+    $montant = bindMontant();
+    
+    
+    $erreur = faireDepot($telephone, $montant);
+    
+    
+    if($erreur == ""){
+        afficherMessage("vous avez fait un depot !");
+    } else {
+        afficherMessage($erreur);
+    }
+    
     } else if($choix == "3"){
         afficherMessage("noppeegul");
     } else if($choix == "4"){
