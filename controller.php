@@ -1,5 +1,4 @@
 <?php
-
 // on affiche le menu
 function afficherMenu() : void {
     echo "\n Menu Distributeur \n";
@@ -27,5 +26,16 @@ function bindMontant () : string{
 }
 
 function saisiTelephone () : string{
-    return readline("Saisir un numero telephone");
+    return readline("Saisir un numero telephone: ");
+}
+
+function afficherTransactions(array $transactions) : void {
+    foreach($transactions as $transaction){
+        $message = $transaction['type']." | Montant : ".$transaction['montant'];
+        if($transaction['type'] == 'retrait'){
+          $message = $message." | Frais : ".$transaction['frais'];
+        }
+         $message = $message." | Telephone : ".$transaction['indexClient'];
+        afficherMessage($message);
+    }
 }
