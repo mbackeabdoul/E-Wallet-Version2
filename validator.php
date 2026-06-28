@@ -47,6 +47,7 @@ function verifieSolde(string $telephone, int $montant):string {
     foreach($wallets as $wallet){
         if($wallet['telephone'] == $telephone){
         if($wallet['solde']< $montant){
+            
         $erreur = "Solde nest pas suiffisant";
        }
      }

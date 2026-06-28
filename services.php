@@ -19,26 +19,34 @@ function faireDepot(string $telephone, int $montant) : string {
         ajouterSolde($telephone, $montant);
         $newTransaction = [
             'montant' => $montant,
-            'indexClient' => $telephone
+            'indexClient' => $telephone,
+            'type' => 'depot'
+
         ];
         enregistrerTransaction($newTransaction);
     }
     return $erreur;
 }
 // faire retrait
-function faireRetrait(string $telephone, int $montant) : string {
+function faireRetrait(string $telephone,$montant) : string {
     $erreur = telephoneExiste($telephone);
-     if($erreur == "") 
-    $erreur = montantValide($montant);
-    if($erreur == "") $erreur = verifieSolde($telephone, $montant);
+    if($erreur== "") $erreur = montantValide($montant);
     if($erreur == ""){
-        soustrairSolde($telephone, $montant);
+        $frais= calculeFrais($montant);
+        $totalRetrait = $montant + $frais;
+        $erreur = verifieSolde($telephone, $totalRetrait);
+ }
+    if($erreur == ""){
+        soustrairSolde($telephone, $totalRetrait);
         $newTransaction = [
-           'montant' => $montant,
-           'indexClient' => $telephone
-     ];
-     enregistrerTransaction($newTransaction);
-    }   
+            'montant' => $montant,
+            'indexClient' => $telephone,
+            'type' => 'retrait', 
+            'frais' => $frais
+        ];
+        enregistrerTransaction($newTransaction);
+    }
+    
     return $erreur;
 }
 
@@ -53,4 +61,18 @@ function verifierUnicite(string $telephone, string $code) : string {
         }
     }
     return $erreur;
+}
+
+function calculeFrais(int $montant):int{
+    if($montant <= 10000){
+        $frais = 200;
+    } else if($montant <= 100000){
+        $frais = 500;
+    } else {
+        $frais = $montant / 100;
+        if($frais > 5000){
+            $frais = 5000;
+        }
+    }
+    return $frais;
 }

@@ -43,7 +43,7 @@ do {
         }
     
     } else if($choix == "4"){
-      afficherTransactions();
+      afficherTransactions($transactions);
         } else if($choix == "0"){
         afficherMessage("Mercii !");
     } else {
