@@ -25,11 +25,7 @@ do {
     } else if($choix == "2"){
           $telephone = saisiTelephone();
     $montant = bindMontant();
-    
-    
     $erreur = faireDepot($telephone, $montant);
-    
-    
     if($erreur == ""){
         afficherMessage("vous avez fait un depot !");
     } else {
@@ -37,13 +33,20 @@ do {
     }
     
     } else if($choix == "3"){
-        afficherMessage("noppeegul");
+           $telephone = saisiTelephone();
+        $montant = bindMontant();
+        $erreur = faireRetrait($telephone, (int)$montant);
+        if($erreur == ""){
+            afficherMessage("vous avez fait un retrait");
+        } else {
+            afficherMessage($erreur);
+        }
+    
     } else if($choix == "4"){
-        afficherMessage("noppeeegul");
-    } else if($choix == "0"){
+      afficherTransactions($transactions);
+        } else if($choix == "0"){
         afficherMessage("Mercii !");
     } else {
         afficherMessage("Choix invalide veuillez reessayer");
     }
-
 } while($choix != "0");
