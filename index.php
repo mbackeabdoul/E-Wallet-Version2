@@ -11,42 +11,42 @@ include "controller.php";
 
 // boucle de menu
 do {
-    afficherMenu();
+    Controller\afficherMenu();
     $choix = readline("Votre choix: ");
 
     if($choix == "1"){
-        $newWallet = saisirWallet();
+        $newWallet = Controller\saisirWallet();
         $erreur = creerWallet($newWallet);
         if($erreur == ""){
-            afficherMessage("Wallet a ete cree ");
+            Controller\afficherMessage("Wallet a ete cree ");
         } else {
-            afficherMessage($erreur);
+            Controller\afficherMessage($erreur);
         }
     } else if($choix == "2"){
-          $telephone = saisiTelephone();
-    $montant = bindMontant();
+          $telephone = Controller\saisiTelephone();
+    $montant = Controller\bindMontant();
     $erreur = faireDepot($telephone, $montant);
     if($erreur == ""){
-        afficherMessage("vous avez fait un depot !");
+       Controller\afficherMessage("vous avez fait un depot !");
     } else {
-        afficherMessage($erreur);
+        Controller\afficherMessage($erreur);
     }
     
     } else if($choix == "3"){
-           $telephone = saisiTelephone();
-        $montant = bindMontant();
+           $telephone = Controller\saisiTelephone();
+        $montant = Controller\bindMontant();
         $erreur = faireRetrait($telephone, (int)$montant);
         if($erreur == ""){
-            afficherMessage("vous avez fait un retrait");
+            Controller\afficherMessage("vous avez fait un retrait");
         } else {
-            afficherMessage($erreur);
+            Controller\afficherMessage($erreur);
         }
     
     } else if($choix == "4"){
-      afficherTransactions($transactions);
+     Controller\afficherTransactions($transactions);
         } else if($choix == "0"){
-        afficherMessage("Mercii !");
+        Controller\afficherMessage("Mercii !");
     } else {
-        afficherMessage("Choix invalide veuillez reessayer");
+        Controller\afficherMessage("Choix invalide veuillez reessayer");
     }
 } while($choix != "0");

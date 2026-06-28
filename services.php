@@ -1,50 +1,50 @@
 <?php
 // creation de wallet
 function creerWallet(array $newWallet) : string {
-    $erreur = validerTelephone($newWallet['telephone']);
-    if($erreur == "") $erreur = validerCode($newWallet['code']);
+   $erreur = Validator\validerTelephone($newWallet['telephone']);
+    if($erreur == "") $erreur = Validator\validerCode($newWallet['code']);
     if($erreur == "") $erreur=verifierUnicite($newWallet['telephone'],$newWallet['code']);
     if($erreur == ""){
-     enregistrerWallet($newWallet);
+     Repository\enregistrerWallet($newWallet);
     }
     return $erreur;
 }
 
 // faire une depot
 function faireDepot(string $telephone, int $montant) : string {
-    $erreur = telephoneExiste($telephone);
+    $erreur =Validator\telephoneExiste($telephone);
     if($erreur == "") 
-    $erreur = montantValide($montant);
+    $erreur = Validator\montantValide($montant);
     if($erreur == ""){
-        ajouterSolde($telephone, $montant);
+        Repository\ajouterSolde($telephone, $montant);
         $newTransaction = [
             'montant' => $montant,
             'indexClient' => $telephone,
             'type' => 'depot'
 
         ];
-        enregistrerTransaction($newTransaction);
+        Repository\enregistrerTransaction($newTransaction);
     }
     return $erreur;
 }
 // faire retrait
 function faireRetrait(string $telephone,$montant) : string {
-    $erreur = telephoneExiste($telephone);
-    if($erreur== "") $erreur = montantValide($montant);
+    $erreur = Validator\telephoneExiste($telephone);
+    if($erreur== "") $erreur = Validator\montantValide($montant);
     if($erreur == ""){
         $frais= calculeFrais($montant);
         $totalRetrait = $montant + $frais;
-        $erreur = verifieSolde($telephone, $totalRetrait);
+        $erreur = Validator\verifieSolde($telephone, $totalRetrait);
  }
     if($erreur == ""){
-        soustrairSolde($telephone, $totalRetrait);
+        Repository\soustrairSolde($telephone, $totalRetrait);
         $newTransaction = [
             'montant' => $montant,
             'indexClient' => $telephone,
             'type' => 'retrait', 
             'frais' => $frais
         ];
-        enregistrerTransaction($newTransaction);
+        Repository\enregistrerTransaction($newTransaction);
     }
     
     return $erreur;

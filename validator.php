@@ -1,6 +1,7 @@
 <?php
 
 // validation du telephone
+namespace Validator;
 function validerTelephone(string $telephone) : string {
     $erreur = "";
     if(strlen($telephone) != 9){
