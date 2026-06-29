@@ -24,16 +24,15 @@ function validerCode(string $code) : string{
     return $erreur;
 }
 
-function telephoneExiste(string $telephone) : string{
+function telephoneExiste(string $telephone) : string {
     global $wallets;
-    $numeroTrouve = array_filter($wallets,function($wallet)use($telephone) {
-        return $wallet['telephone'] == $telephone;
-    });
+    $numeroTrouve = array_filter($wallets,fn($wallet)=>$wallet['telephone'] == $telephone);
     if(empty($numeroTrouve)){
         return "numero telephone nexiste pas";
     }
     return "";
 }
+
 
 function montantValide (string $montant) : string{
     $erreurs = "";
@@ -60,17 +59,13 @@ function verifieSolde(string $telephone, int $montant) : string {
 
 function verifierUnicite(string $telephone, string $code) : string {
     global $wallets;
-    $numeroTrouve = array_filter($wallets, function($wallet) use ($telephone) {
-        return $wallet['telephone'] == $telephone;
-    });
+    $numeroTrouve = array_filter($wallets,fn($wallet)=> $wallet['telephone'] == $telephone);
     if(!empty($numeroTrouve)){
-        return "telephone deja exister";
+        return "telephone deja existant";
     }
-    $codeTrouve = array_filter($wallets, function($wallet) use ($code) {
-        return $wallet['code'] == $code;
-    });
+    $codeTrouve = array_filter($wallets, fn($wallet)=>$wallet['code'] == $code);
     if(!empty($codeTrouve)){
-        return "code deja exister";
+        return "code deja existant";
     }
     return "";
 }
