@@ -4,7 +4,7 @@ namespace Controller;
 function afficherMenu() : void {
     echo "\n Menu Distributeur \n";
     echo "1. Creer Wallet\n";
-    echo "2.Faire Depot\n";
+    echo "2. Faire Depot\n";
     echo "3. Faire Retrait\n";
     echo "4. Lister Transactions\n";
     echo "0. Quitter\n";

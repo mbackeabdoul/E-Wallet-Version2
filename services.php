@@ -3,7 +3,7 @@
 function creerWallet(array $newWallet) : string {
    $erreur = Validator\validerTelephone($newWallet['telephone']);
     if($erreur == "") $erreur = Validator\validerCode($newWallet['code']);
-    if($erreur == "") $erreur=verifierUnicite($newWallet['telephone'],$newWallet['code']);
+    if($erreur == "") $erreur=Validator\verifierUnicite($newWallet['telephone'],$newWallet['code']);
     if($erreur == ""){
      Repository\enregistrerWallet($newWallet);
     }
@@ -21,7 +21,6 @@ function faireDepot(string $telephone, int $montant) : string {
             'montant' => $montant,
             'indexClient' => $telephone,
             'type' => 'depot'
-
         ];
         Repository\enregistrerTransaction($newTransaction);
     }
@@ -50,18 +49,6 @@ function faireRetrait(string $telephone,$montant) : string {
     return $erreur;
 }
 
-function verifierUnicite(string $telephone, string $code) : string {
-    global $wallets;
-     $erreur = "";
-    foreach($wallets as $wallet){
-        if($wallet['telephone'] == $telephone){
-            $erreur = "numero telephone existe";
-        } else if($wallet['code'] == $code){
-            $erreur = "code existe";
-        }
-    }
-    return $erreur;
-}
 
 function calculeFrais(int $montant):int{
     if($montant <= 10000){
