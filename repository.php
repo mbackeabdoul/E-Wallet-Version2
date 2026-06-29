@@ -1,5 +1,5 @@
 <?php
-
+namespace Repository;
 // enregistre wallet
 function enregistrerWallet(array $newWallet) : void {
     global $wallets;

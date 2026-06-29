@@ -1,4 +1,5 @@
 <?php
+namespace Controller;
 // on affiche le menu
 function afficherMenu() : void {
     echo "\n Menu Distributeur \n";
