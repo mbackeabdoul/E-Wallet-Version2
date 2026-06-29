@@ -16,7 +16,7 @@ function validerTelephone(string $telephone) : string {
     }
     return $erreur;
 }
-function validerCode(string $code) : string {
+function validerCode(string $code) : string{
     $erreur = "";
     if(strlen($code) != 4){
         $erreur = "code doit etre 4 caractere";
@@ -24,15 +24,15 @@ function validerCode(string $code) : string {
     return $erreur;
 }
 
-function telephoneExiste (string $telephone) : string{
-        global $wallets;
-        $erreur = "numero telephone nexiste pas";
-        foreach($wallets as $wallet){
-            if($wallet['telephone']==$telephone){
-                $erreur = "";
-            }
-        }
-        return $erreur;
+function telephoneExiste(string $telephone) : string{
+    global $wallets;
+    $numeroTrouve = array_filter($wallets,function($wallet)use($telephone) {
+        return $wallet['telephone'] == $telephone;
+    });
+    if(empty($numeroTrouve)){
+        return "numero telephone nexiste pas";
+    }
+    return "";
 }
 
 function montantValide (string $montant) : string{
@@ -42,16 +42,35 @@ function montantValide (string $montant) : string{
     }
     return $erreurs; 
 } 
-function verifieSolde(string $telephone, int $montant):string {
+
+function verifieSolde(string $telephone, int $montant) : string {
     global $wallets;
-    $erreur = "";
-    foreach($wallets as $wallet){
-        if($wallet['telephone'] == $telephone){
-        if($wallet['solde']< $montant){
-            
-        $erreur = "Solde nest pas suiffisant";
-       }
-     }
+    $soldeTrouve = array_filter($wallets, 
+    function($wallet) 
+    use ($telephone, $montant){
+       return 
+       $wallet['telephone'] == $telephone && 
+       $wallet['solde'] < $montant;
+    });
+    if(!empty($soldeTrouve)){
+       return "Solde n'est pas suffsant";
     }
-    return $erreur;
+    return "";
+}
+
+function verifierUnicite(string $telephone, string $code) : string {
+    global $wallets;
+    $numeroTrouve = array_filter($wallets, function($wallet) use ($telephone) {
+        return $wallet['telephone'] == $telephone;
+    });
+    if(!empty($numeroTrouve)){
+        return "telephone deja exister";
+    }
+    $codeTrouve = array_filter($wallets, function($wallet) use ($code) {
+        return $wallet['code'] == $code;
+    });
+    if(!empty($codeTrouve)){
+        return "code deja exister";
+    }
+    return "";
 }
